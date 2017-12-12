@@ -68,7 +68,7 @@
 
 <span class="hljs-comment">// 读取文件作为一个 Buffer</span>
 <span class="hljs-keyword">const</span> buffer = fs.readFileSync(__dirname + <span class="hljs-string">'/test.png'</span>);</code></pre><h2 id="css"><a class="header-link" href="#css"></a>CSS</h2>
-<p>CSS 资源可以在 JavaScript 或 HTML 文件中导入，可以通过 <code>@ import</code> 语法引用的依赖项，还可以通过 <code>url()</code> 方法引用图片、字体等的资源。 其它 <code>@ import</code> 的 CSS 文件被内联到同一个 CSS 输出包中，<code>url()</code> 引用被重写为它们的输出文件名。 所有的文件名应该是相对于当前的 CSS 文件。</p>
+<p>CSS 资源可以在 JavaScript 或 HTML 文件中导入，可以通过 <code>@import</code> 语法引用的依赖项，还可以通过 <code>url()</code> 方法引用图片、字体等的资源。 其它 <code>@import</code> 的 CSS 文件被内联到同一个 CSS 输出包中，<code>url()</code> 引用被重写为它们的输出文件名。 所有的文件名应该是相对于当前的 CSS 文件。</p>
 <pre class="hljs"><code><span class="hljs-comment">/* 导入其它 CSS 文件 */</span>
 @<span class="hljs-keyword">import</span> <span class="hljs-string">'./other.css'</span>;
 

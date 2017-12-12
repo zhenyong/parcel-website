@@ -46,11 +46,11 @@
     </nav>
     <main><h1 id="🐠-转换"><a class="header-link" href="#🐠-转换"></a>🐠 转换</h1>
 <p>尽管许多打包工具要求你安装和配置插件来转换资源，但 Parcel 支持许多常见的语法转换，并内置开箱即用的转换器。你可以使用 <a href="https://babeljs.io">Babel</a> 来转换 JavaScript，使用 <a href="http://postcss.org">PostCSS</a> 处理 CSS 和使用 <a href="https://github.com/posthtml/">PostHTML</a> 处理 HTML。当在项目模块中找到配置文件（例如，<code>.babelrc</code>，<code>.postcssrc</code>），Parcel 则会动启动这些转换器。</p>
-<p>This even works in third-party <code>node_modules</code>: if a configuration file is published as part of the package, the transform is automatically turned on for that module only. This keeps bundling fast since only modules that need to be transformed are processed. It also means that you don&#39;t need to manually configure the transforms to include and exclude certain files, or know how third party code is built in order to use it in your application.</p>
 <p>这些机制甚至适用在在第三方 <code>node_modules</code>：如果一个配置文件作为包的一部分被发布，转换器将自动为该模块打开。由于只处理需要转换的模块，因此可以快速打包。这也意味着你不需要手动配置转换来包含和排除某些文件，也不需要了解第三方代码如何构建以便在应用程序中使用。</p>
 <h2 id="babel"><a class="header-link" href="#babel"></a>Babel</h2>
 <p><a href="https://babeljs.io">Babel</a> 是一个非常受欢迎的 JavaScript 转换器，有丰富的插件生态。将 Babel 与 Parcel 一起使用的方式与其他构建工具使用 Babel 的方式相同。</p>
-<p>在项目中安装 presets and 插件：</p>
+<p>在项目中安装 preset 和一些插件：
+（译者：安装 babel-preset-env 会自动安装相关插件）</p>
 <pre class="hljs"><code>yarn add babel-preset-env</code></pre><p>然后创建你一个 <code>.babelrc</code> 文件:</p>
 <pre class="hljs"><code>{
   <span class="hljs-attr">"presets"</span>: [<span class="hljs-string">"env"</span>]
