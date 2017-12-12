@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>✨ 生产</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link type="text/css" rel="stylesheet" href="assets/style.css" />
+  <link type="text/css" rel="stylesheet" href="assets/pilcrow.css" />
+  <link type="text/css" rel="stylesheet" href="assets/hljs-github.min.css"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110647385-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110647385-1');
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">
+      <img class="parcel" src="assets/parcel.png" srcset="assets/parcel@2x.png 2x, assets/parcel@3x.png 3x" height="30">
+      <img class="type" src="assets/logo.svg" alt="Parcel">
+    </a>
+    <div class="links">
+      <a href="https://github.com/parcel-bundler/parcel" target="_blank">GitHub</a>
+    </div>
+  </header>
+  <div class="content">
+    <nav>
+      <ul>
+        <li><a href="getting_started.html">🚀 起步</a></li>
+        <li><a href="assets.html">📦 资源</a></li>
+        <li><a href="transforms.html">🐠 转换</a></li>
+        <li><a href="code_splitting.html">✂️ 代码分块</a></li>
+        <li><a href="hmr.html">🔥 热更新</a></li>
+        <li><a href="production.html">✨ 生产</a></li>
+      </ul>
+      <h3>进阶</h3>
+      <ul>
+        <li><a href="how_it_works.html">🛠 如何工作</a></li>
+        <li><a href="asset_types.html">📝 资源类型</a></li>
+        <li><a href="packagers.html">📦 装包器</a></li>
+        <li><a href="plugins.html">🔌 插件</a></li>
+      </ul>
+    </nav>
+    <main><h1 id="✨-生产"><a class="header-link" href="#✨-生产"></a>✨ 生产</h1>
+<p>当需要打包应用上线生产环境时，可以使用 Parcel 的生产模式。</p>
+<pre class="hljs"><code>parcel build entry.js</code></pre><p>要更改输出包的目录，可以传 <code>--out-dir [目录]</code>（默认为 <code>dist</code>）</p>
+<pre class="hljs"><code>parcel build entry.js --out-dir build/output
+<span class="hljs-comment"># 或缩写 -d ：</span>
+parcel build entry.js <span class="hljs-_">-d</span> build/output</code></pre><p>这将禁用侦测模式和热模块替换，所以它只会构建一次。它还使用压缩器为所有输出包减少文件大小。Parcel 使用的压缩器有：JavaScript 的 <a href="https://github.com/mishoo/UglifyJS2/">uglify-es</a>，CSS 的 <a href="http://cssnano.co">cssnano</a>，HTML 的 <a href="https： //github.com/posthtml/htmlnano">htmlnano</a>。</p>
+<p>启用生产模式还会设置 <code>NODE_ENV = production</code> 环境变量。 像 React 这样的大型库只有开发阶段使用调试功能，通过设置这个环境变量来禁用调试功能，从而使生产的构建更小更快。</p>
+    </main>
+  </div>
+  <script>
+    (function () {
+      var activeLink = Array.from(document.querySelectorAll('nav a')).find(function (a) {
+        return a.href === window.location.href;
+      });
+
+      activeLink.classList.add('selected');
+    })();
+  </script>
+</body>
+</html>

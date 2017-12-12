@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>📦 资源（Assets）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link type="text/css" rel="stylesheet" href="assets/style.css" />
+  <link type="text/css" rel="stylesheet" href="assets/pilcrow.css" />
+  <link type="text/css" rel="stylesheet" href="assets/hljs-github.min.css"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110647385-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110647385-1');
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">
+      <img class="parcel" src="assets/parcel.png" srcset="assets/parcel@2x.png 2x, assets/parcel@3x.png 3x" height="30">
+      <img class="type" src="assets/logo.svg" alt="Parcel">
+    </a>
+    <div class="links">
+      <a href="https://github.com/parcel-bundler/parcel" target="_blank">GitHub</a>
+    </div>
+  </header>
+  <div class="content">
+    <nav>
+      <ul>
+        <li><a href="getting_started.html">🚀 起步</a></li>
+        <li><a href="assets.html">📦 资源</a></li>
+        <li><a href="transforms.html">🐠 转换</a></li>
+        <li><a href="code_splitting.html">✂️ 代码分块</a></li>
+        <li><a href="hmr.html">🔥 热更新</a></li>
+        <li><a href="production.html">✨ 生产</a></li>
+      </ul>
+      <h3>进阶</h3>
+      <ul>
+        <li><a href="how_it_works.html">🛠 如何工作</a></li>
+        <li><a href="asset_types.html">📝 资源类型</a></li>
+        <li><a href="packagers.html">📦 装包器</a></li>
+        <li><a href="plugins.html">🔌 插件</a></li>
+      </ul>
+    </nav>
+    <main><h1 id="📦-资源（assets）"><a class="header-link" href="#📦-资源（assets）"></a>📦 资源（Assets）</h1>
+<p>Parcel 是基于资源的。资源可以表示任何文件，但是 Parcel 对特定类型的资源（如 JavaScript，CSS 和 HTML 文件）有特殊的支持。Parcel 自动分析这些文件中引用的依赖关系，并将其包含在输出包（output bundle）中。相似类型的资源被组合在到同个输出包中。如果你引入不同类型的资源（例如，你在 JS 中引入了 CSS 文件），它将启动一个子输出包，并在父包中留下一个引用，这将在以下部分中进行说明。</p>
+<h2 id="javascript"><a class="header-link" href="#javascript"></a>JavaScript</h2>
+<p>Web 打包器最传统的文件类型是 JavaScript。 Parcel 支持 CommonJS 和 ES6 模块语法来导入文件。 它还支持动态的<code>import（）</code>函数语法来异步加载模块，这在 <a href="code_splitting.html">代码分块</a> 部分讨论。</p>
+<pre class="hljs"><code><span class="hljs-comment">// 使用 CommonJS 语法引入一个模块</span>
+<span class="hljs-keyword">const</span> dep = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./path/to/dep'</span>);
+
+<span class="hljs-comment">// 使用 ES6 语法引入一个模块</span>
+<span class="hljs-keyword">import</span> dep <span class="hljs-keyword">from</span> <span class="hljs-string">'./path/to/dep'</span>;</code></pre><p>你还可以从 JavaScript 文件中导入非 JavaScript 资源，例如 CSS或图像文件。 当你导入这些文件中的一个时，它不像其它打包软件一样内联这些资源， 相反，它跟其它依赖项一样，被放置在一个单独的输出包中（例如一个 CSS 文件）。 当使用<a href="https://github.com/css-modules/css-modules">CSS模块</a> 时，导出的 class 将被放置在 JavaScript 包中。 其它资产类型则导出 URL 到 JavaScript 包中，以便你在代码中引用它们。</p>
+<pre class="hljs"><code><span class="hljs-comment">// 导入一个 CSS 文件</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./test.css'</span>;
+
+<span class="hljs-comment">// 通过 CSS modules 导入一个 CSS 文件</span>
+<span class="hljs-keyword">import</span> classNames <span class="hljs-keyword">from</span> <span class="hljs-string">'./test.css'</span>;
+
+<span class="hljs-comment">// 导入 URL 指向一个图片文件</span>
+<span class="hljs-keyword">import</span> imageURL <span class="hljs-keyword">from</span> <span class="hljs-string">'./test.png'</span>;</code></pre><p>如果你想要在 JavaScript 输出包中内联一个文件，而不是通过 URL 引用，你可以使用 Node.js 的 <code>fs.readFileSync</code> 方法来实现。URL 必须是静态可分析的，这意味着它不能有任何变量（除 <code>__dirname</code> 和 <code>__filename</code> 以外）。</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">'fs'</span>;
+
+<span class="hljs-comment">// 读取文件作为字符串</span>
+<span class="hljs-keyword">const</span> string = fs.readFileSync(__dirname + <span class="hljs-string">'/test.txt'</span>, <span class="hljs-string">'utf8'</span>);
+
+<span class="hljs-comment">// 读取文件作为一个 Buffer</span>
+<span class="hljs-keyword">const</span> buffer = fs.readFileSync(__dirname + <span class="hljs-string">'/test.png'</span>);</code></pre><h2 id="css"><a class="header-link" href="#css"></a>CSS</h2>
+<p>CSS 资源可以在 JavaScript 或 HTML 文件中导入，可以通过 <code>@ import</code> 语法引用的依赖项，还可以通过 <code>url()</code> 方法引用图片、字体等的资源。 其它 <code>@ import</code> 的 CSS 文件被内联到同一个 CSS 输出包中，<code>url()</code> 引用被重写为它们的输出文件名。 所有的文件名应该是相对于当前的 CSS 文件。</p>
+<pre class="hljs"><code><span class="hljs-comment">/* 导入其它 CSS 文件 */</span>
+@<span class="hljs-keyword">import</span> <span class="hljs-string">'./other.css'</span>;
+
+<span class="hljs-selector-class">.test</span> {
+  <span class="hljs-comment">/* 引用一个图片文件 */</span>
+  <span class="hljs-attribute">background</span>: <span class="hljs-built_in">url</span>(<span class="hljs-string">'./images/background.png'</span>);
+}</code></pre><p>除了原生 CSS 之外，还支持其他编译成 CSS 的语言，如 LESS、SASS 和 Stylus，并且工作方式相同。</p>
+<h2 id="html"><a class="header-link" href="#html"></a>HTML</h2>
+<p>HTML 资源通常是你提供给 Parcel 的入口文件，但也可以由 JavaScript 文件引用，例如，提供其他页面的链接。 另外，脚本、样式、媒体和其它 HTML 文件的 URL 会被解析提取和编译，这跟之前描述的一样。 引用被重写在 HTML 中，以便它们链接到正确的输出文件。 所有的文件名应该是相对于当前的 HTML 文件。</p>
+<pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- 引用一个图片文件 --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./images/header.png"</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"./other.html"</span>&gt;</span>链接到其他页面<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+
+  <span class="hljs-comment">&lt;!-- 导入一个 JavaScript 输出包 --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./index.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></code></pre>    </main>
+  </div>
+  <script>
+    (function () {
+      var activeLink = Array.from(document.querySelectorAll('nav a')).find(function (a) {
+        return a.href === window.location.href;
+      });
+
+      activeLink.classList.add('selected');
+    })();
+  </script>
+</body>
+</html>

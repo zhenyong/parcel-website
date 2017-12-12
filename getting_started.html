@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🚀 起步</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link type="text/css" rel="stylesheet" href="assets/style.css" />
+  <link type="text/css" rel="stylesheet" href="assets/pilcrow.css" />
+  <link type="text/css" rel="stylesheet" href="assets/hljs-github.min.css"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110647385-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110647385-1');
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">
+      <img class="parcel" src="assets/parcel.png" srcset="assets/parcel@2x.png 2x, assets/parcel@3x.png 3x" height="30">
+      <img class="type" src="assets/logo.svg" alt="Parcel">
+    </a>
+    <div class="links">
+      <a href="https://github.com/parcel-bundler/parcel" target="_blank">GitHub</a>
+    </div>
+  </header>
+  <div class="content">
+    <nav>
+      <ul>
+        <li><a href="getting_started.html">🚀 起步</a></li>
+        <li><a href="assets.html">📦 资源</a></li>
+        <li><a href="transforms.html">🐠 转换</a></li>
+        <li><a href="code_splitting.html">✂️ 代码分块</a></li>
+        <li><a href="hmr.html">🔥 热更新</a></li>
+        <li><a href="production.html">✨ 生产</a></li>
+      </ul>
+      <h3>进阶</h3>
+      <ul>
+        <li><a href="how_it_works.html">🛠 如何工作</a></li>
+        <li><a href="asset_types.html">📝 资源类型</a></li>
+        <li><a href="packagers.html">📦 装包器</a></li>
+        <li><a href="plugins.html">🔌 插件</a></li>
+      </ul>
+    </nav>
+    <main><h1 id="🚀-起步"><a class="header-link" href="#🚀-起步"></a>🚀 起步</h1>
+<p>Parcel 是一个 Web 应用程序打包程序，以其开发体验而独树一帜。它利用多核处理提供极快的性能，并且是零配置的。</p>
+<p>首先通过 Yarn 或 npm 安装 Parcel:</p>
+<p>Yarn:</p>
+<pre class="hljs"><code>yarn global add parcel-bundler</code></pre><p>npm:</p>
+<pre class="hljs"><code>npm install -g parcel-bundler</code></pre><p>通过下面命令，在项目目录下创建 package.json 文件:</p>
+<pre class="hljs"><code>yarn init -y</code></pre><p>or </p>
+<pre class="hljs"><code>npm init -y</code></pre><p>Parcel 可以使用任何类型的文件作为入口，但 HTML 或 JavaScript 文件是一个很好的入口。如果你使用相对路径在 HTML 中链接入口 JavaScript 文件，则 Parcel 也会为你处理，并将该引用替换为输出文件的 URL。</p>
+<p>接下来，创建 index.html 和 index.js 文件。</p>
+<pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"./index.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></code></pre><pre class="hljs"><code><span class="hljs-built_in">console</span>.log(<span class="hljs-string">"hello world"</span>);</code></pre><p>Parcel 有一个内置的开发服务器, 会根据你的文件改动自动重新构建，并且支持 <a href="hmr.html">热模块替换</a> 进行快速开发。只需要在入口文件指出：</p>
+<pre class="hljs"><code>parcel index.html</code></pre><p>在浏览器打开 <a href="http://localhost:1234/">http://localhost:1234/</a> 。你可以通过 <code>-p &lt;端口&gt;</code> 选项设置端口。</p>
+<p>如果您没有自己的服务器，或者你的应用程序完全是客户端渲染的，请使用开发服务器。如果你有自己的服务器，你可以在 <code>watch</code> 模式下运行 Parcel。 这仍然会对文件更改自动重建，并支持热模块替换，但不启动 Web 服务器。</p>
+<pre class="hljs"><code>parcel watch index.html</code></pre><p>当你准备建立生产时，<code>build</code> 模式关闭监视，并且只构建一次。有关更多详细信息，请参见<a href="production.html">生产</a> 部分。</p>
+    </main>
+  </div>
+  <script>
+    (function () {
+      var activeLink = Array.from(document.querySelectorAll('nav a')).find(function (a) {
+        return a.href === window.location.href;
+      });
+
+      activeLink.classList.add('selected');
+    })();
+  </script>
+</body>
+</html>

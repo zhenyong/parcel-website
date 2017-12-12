@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🔥 热模块替换（Hot Module Replacement）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link type="text/css" rel="stylesheet" href="assets/style.css" />
+  <link type="text/css" rel="stylesheet" href="assets/pilcrow.css" />
+  <link type="text/css" rel="stylesheet" href="assets/hljs-github.min.css"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110647385-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110647385-1');
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">
+      <img class="parcel" src="assets/parcel.png" srcset="assets/parcel@2x.png 2x, assets/parcel@3x.png 3x" height="30">
+      <img class="type" src="assets/logo.svg" alt="Parcel">
+    </a>
+    <div class="links">
+      <a href="https://github.com/parcel-bundler/parcel" target="_blank">GitHub</a>
+    </div>
+  </header>
+  <div class="content">
+    <nav>
+      <ul>
+        <li><a href="getting_started.html">🚀 起步</a></li>
+        <li><a href="assets.html">📦 资源</a></li>
+        <li><a href="transforms.html">🐠 转换</a></li>
+        <li><a href="code_splitting.html">✂️ 代码分块</a></li>
+        <li><a href="hmr.html">🔥 热更新</a></li>
+        <li><a href="production.html">✨ 生产</a></li>
+      </ul>
+      <h3>进阶</h3>
+      <ul>
+        <li><a href="how_it_works.html">🛠 如何工作</a></li>
+        <li><a href="asset_types.html">📝 资源类型</a></li>
+        <li><a href="packagers.html">📦 装包器</a></li>
+        <li><a href="plugins.html">🔌 插件</a></li>
+      </ul>
+    </nav>
+    <main><h1 id="🔥-热模块替换（hot-module-replacement）"><a class="header-link" href="#🔥-热模块替换（hot-module-replacement）"></a>🔥 热模块替换（Hot Module Replacement）</h1>
+<p>热模块替换（HMR）通过在运行时自动更新浏览器中的模块而不需要刷新整个页面来改进开发体验。这意味着应用程序状态可以在你更改小地方时保留。 Parcel 的 HMR 开箱即用，支持 JavaScript 和 CSS 资源。在生产模式时，HMR会自动禁用。</p>
+<p>在保存文件时，Parcel 会重建所更改的内容，并将更新发送到包含新代码的任何正在运行的客户端。新的代码替换旧版本，并与所有的父包一起重新计算。你可以使用 <code>module.hot</code> API 钩子进行处理，这个 API 可以在某个模块即将被丢弃或者新版本替换时进行通知。像<a href="https：/ /github.com/gaearon/react-hot-loader">react-hot-loader</a> 可以帮助这个过程，并与 Parcel 开箱即用。</p>
+<p>有两个方法需要知道：<code>module.hot.accept</code> 和 <code>module.hot.dispose</code>。你可以用一个回调函数调用 <code>module.hot.accept</code>，这个函数在模块或者它的任何依赖被更新时执行。 <code>module.hot.dispose</code> 接受一个回调函数，在模块即将被替换时被调用。</p>
+<pre class="hljs"><code><span class="hljs-keyword">if</span> (<span class="hljs-built_in">module</span>.hot) {
+  <span class="hljs-built_in">module</span>.hot.dispose(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// 模块即将被替换</span>
+  });
+
+  <span class="hljs-built_in">module</span>.hot.accept(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// 模块或者它的依赖刚刚替换完</span>
+  });
+}</code></pre>    </main>
+  </div>
+  <script>
+    (function () {
+      var activeLink = Array.from(document.querySelectorAll('nav a')).find(function (a) {
+        return a.href === window.location.href;
+      });
+
+      activeLink.classList.add('selected');
+    })();
+  </script>
+</body>
+</html>

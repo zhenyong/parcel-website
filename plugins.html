@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🔌 插件</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link type="text/css" rel="stylesheet" href="assets/style.css" />
+  <link type="text/css" rel="stylesheet" href="assets/pilcrow.css" />
+  <link type="text/css" rel="stylesheet" href="assets/hljs-github.min.css"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110647385-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110647385-1');
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">
+      <img class="parcel" src="assets/parcel.png" srcset="assets/parcel@2x.png 2x, assets/parcel@3x.png 3x" height="30">
+      <img class="type" src="assets/logo.svg" alt="Parcel">
+    </a>
+    <div class="links">
+      <a href="https://github.com/parcel-bundler/parcel" target="_blank">GitHub</a>
+    </div>
+  </header>
+  <div class="content">
+    <nav>
+      <ul>
+        <li><a href="getting_started.html">🚀 起步</a></li>
+        <li><a href="assets.html">📦 资源</a></li>
+        <li><a href="transforms.html">🐠 转换</a></li>
+        <li><a href="code_splitting.html">✂️ 代码分块</a></li>
+        <li><a href="hmr.html">🔥 热更新</a></li>
+        <li><a href="production.html">✨ 生产</a></li>
+      </ul>
+      <h3>进阶</h3>
+      <ul>
+        <li><a href="how_it_works.html">🛠 如何工作</a></li>
+        <li><a href="asset_types.html">📝 资源类型</a></li>
+        <li><a href="packagers.html">📦 装包器</a></li>
+        <li><a href="plugins.html">🔌 插件</a></li>
+      </ul>
+    </nav>
+    <main><h1 id="🔌-插件"><a class="header-link" href="#🔌-插件"></a>🔌 插件</h1>
+<p>Parcel 采取与许多其他工具略有不同的方式，因为许多常见的配置都是内置的，无需安装和配置额外的插件。但是，在某些情况下，你可能希望自定义扩展 Parcel，这个时候，插件就派上用场。另外，会根据 <code>package.json</code> 依赖关系自动检测和加载已安装的插件。</p>
+<p>当添加扩展新的文件格式到 Parcel 时，首先应该考虑它的普遍性，以及如何实现标准化。如果它足够普遍和标准，格式可能应该添加到 Parcel 核心，而不是作为用户扩展安装的插件。如果你有任何疑问，<a href="https://github.com/parcel-bundler/parcel/issues">GitHub</a> 是适合讨论的地方。</p>
+<h2 id="插件-api"><a class="header-link" href="#插件-api"></a>插件 API</h2>
+<p>Parcel 插件非常简单。它们只是 export 单个函数的模块，在初始化过程中会自动被 Parcel 调用。该函数接收 <code>Bundler</code> 对象作为输入，并可以执行一些设置，如注册资产类型和装包器。</p>
+<pre class="hljs"><code><span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">bundler</span>) </span>{
+  bundler.addAssetType(<span class="hljs-string">'ext'</span>, <span class="hljs-built_in">require</span>.resolve(<span class="hljs-string">'./MyAsset'</span>));
+  bundler.addPackager(<span class="hljs-string">'foo'</span>, <span class="hljs-built_in">require</span>.resolve(<span class="hljs-string">'./MyPackager'</span>));
+};</code></pre><p>在 npm 上使用 <code>parcel-plugin-</code> 前缀发布这个包，它将被自动检测并加载，正如接下来要说的。</p>
+<h2 id="使用插件"><a class="header-link" href="#使用插件"></a>使用插件</h2>
+<p>在 Parcel 中使用插件实在是太简单了。你所需要做的就是安装它们并保存在你的 <code>package.json</code> 中。插件应该用前缀 <code>parcel-plugin-</code> 命名，例如 <code>parcel-plugin-foo</code>。在 package.json中 列出的任何依赖关系都会在初始化时自动加载。</p>
+    </main>
+  </div>
+  <script>
+    (function () {
+      var activeLink = Array.from(document.querySelectorAll('nav a')).find(function (a) {
+        return a.href === window.location.href;
+      });
+
+      activeLink.classList.add('selected');
+    })();
+  </script>
+</body>
+</html>

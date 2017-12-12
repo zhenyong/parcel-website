@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>✂️ 代码分块</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link type="text/css" rel="stylesheet" href="assets/style.css" />
+  <link type="text/css" rel="stylesheet" href="assets/pilcrow.css" />
+  <link type="text/css" rel="stylesheet" href="assets/hljs-github.min.css"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110647385-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110647385-1');
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">
+      <img class="parcel" src="assets/parcel.png" srcset="assets/parcel@2x.png 2x, assets/parcel@3x.png 3x" height="30">
+      <img class="type" src="assets/logo.svg" alt="Parcel">
+    </a>
+    <div class="links">
+      <a href="https://github.com/parcel-bundler/parcel" target="_blank">GitHub</a>
+    </div>
+  </header>
+  <div class="content">
+    <nav>
+      <ul>
+        <li><a href="getting_started.html">🚀 起步</a></li>
+        <li><a href="assets.html">📦 资源</a></li>
+        <li><a href="transforms.html">🐠 转换</a></li>
+        <li><a href="code_splitting.html">✂️ 代码分块</a></li>
+        <li><a href="hmr.html">🔥 热更新</a></li>
+        <li><a href="production.html">✨ 生产</a></li>
+      </ul>
+      <h3>进阶</h3>
+      <ul>
+        <li><a href="how_it_works.html">🛠 如何工作</a></li>
+        <li><a href="asset_types.html">📝 资源类型</a></li>
+        <li><a href="packagers.html">📦 装包器</a></li>
+        <li><a href="plugins.html">🔌 插件</a></li>
+      </ul>
+    </nav>
+    <main><h1 id="✂️-代码分块"><a class="header-link" href="#✂️-代码分块"></a>✂️ 代码分块</h1>
+<p>Parcel 支持零配置实现代码分块。 这使你可以将应用程序代码拆分为按需加载的独立包，这意味着更小的初始包大小和更快的加载时间。当用户在应用程序中浏览并需要某个模块时，Parcel 会自动负责按需加载子包。</p>
+<p>代码分块是通过动态 <code>import()</code> 方法 <a href="https://github.com/tc39/proposal-dynamic-import">syntax proposal</a> 控制的, 工作起来就像 <code>import</code> 语句 or <code>require</code> 方法，不过它是返回一个 Promise，这意味着该模块是异步加载的。</p>
+<p>以下示例显示如何使用动态导入来按需加载应用程序的子页面。</p>
+<pre class="hljs"><code><span class="hljs-keyword">import</span>(<span class="hljs-string">'./pages/about'</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">page</span>) </span>{
+  <span class="hljs-comment">// 渲染页面</span>
+  page.default();
+});</code></pre><p>由于 <code>import()</code> 返回一个 Promise，所以你也可以使用 async/await 语法。你可能需要配置 Babel 来转换这个语法，直到浏览器得到更广泛的支持。</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> page = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./pages/about'</span>);
+<span class="hljs-comment">// 渲染页面</span>
+page.default();</code></pre><p>在 Parcel 中动态导入也会延迟加载，所以你仍然可以将所有的 <code>import()</code> 调用放在文件的顶部，并且在使用子包之前，它们将不会被加载。 以下示例显示如何动态地延迟加载应用程序的子页面。</p>
+<pre class="hljs"><code><span class="hljs-comment">// 设置一个映射，页面名称对应动态 import</span>
+<span class="hljs-comment">// 这些页面在使用前不会加载</span>
+<span class="hljs-keyword">const</span> pages = {
+  <span class="hljs-attr">about</span>: <span class="hljs-keyword">import</span>(<span class="hljs-string">'./pages/about'</span>),
+  <span class="hljs-attr">blog</span>: <span class="hljs-keyword">import</span>(<span class="hljs-string">'./pages/blog'</span>)
+};
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">renderPage</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-comment">// 延迟加载请求的页面</span>
+  <span class="hljs-keyword">const</span> page = <span class="hljs-keyword">await</span> pages[name];
+  <span class="hljs-keyword">return</span> page.default();
+}</code></pre><p><strong>注意:</strong> 如果你想在不支持 async/await 的浏览器中使用它，记得在你的应用中引入 <code>babel-polyfill</code> 或者使用 <code>babel-runtime</code> +<code>babel-plugin-transform-runtime</code>）。</p>
+<pre class="hljs"><code>yarn add babel-polyfill</code></pre><pre class="hljs"><code><span class="hljs-keyword">import</span> <span class="hljs-string">"babel-polyfill"</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">"./app"</span>;</code></pre><p>阅读文档 <a href="http://babeljs.io/docs/usage/polyfill">babel-polyfill</a> 和 <a href="http://babeljs.io/docs/plugins/transform-runtime">babel-runtime</a>.</p>
+    </main>
+  </div>
+  <script>
+    (function () {
+      var activeLink = Array.from(document.querySelectorAll('nav a')).find(function (a) {
+        return a.href === window.location.href;
+      });
+
+      activeLink.classList.add('selected');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>📝 资源类型</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link type="text/css" rel="stylesheet" href="assets/style.css" />
+  <link type="text/css" rel="stylesheet" href="assets/pilcrow.css" />
+  <link type="text/css" rel="stylesheet" href="assets/hljs-github.min.css"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110647385-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-110647385-1');
+  </script>
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">
+      <img class="parcel" src="assets/parcel.png" srcset="assets/parcel@2x.png 2x, assets/parcel@3x.png 3x" height="30">
+      <img class="type" src="assets/logo.svg" alt="Parcel">
+    </a>
+    <div class="links">
+      <a href="https://github.com/parcel-bundler/parcel" target="_blank">GitHub</a>
+    </div>
+  </header>
+  <div class="content">
+    <nav>
+      <ul>
+        <li><a href="getting_started.html">🚀 起步</a></li>
+        <li><a href="assets.html">📦 资源</a></li>
+        <li><a href="transforms.html">🐠 转换</a></li>
+        <li><a href="code_splitting.html">✂️ 代码分块</a></li>
+        <li><a href="hmr.html">🔥 热更新</a></li>
+        <li><a href="production.html">✨ 生产</a></li>
+      </ul>
+      <h3>进阶</h3>
+      <ul>
+        <li><a href="how_it_works.html">🛠 如何工作</a></li>
+        <li><a href="asset_types.html">📝 资源类型</a></li>
+        <li><a href="packagers.html">📦 装包器</a></li>
+        <li><a href="plugins.html">🔌 插件</a></li>
+      </ul>
+    </nav>
+    <main><h1 id="📝-资源类型"><a class="header-link" href="#📝-资源类型"></a>📝 资源类型</h1>
+<p>正如 <a href="assets.html">资源章节</a> 里描述的，Parcel 将输入的文件看作 <code>资源（Asset）</code>。<code>资源类型</code> 看作是子类，继承自基类 <code>Asset</code>，并实现了必要的接口，用于解析代码、分析依赖、转换以及生成代码。</p>
+<p>因为 Parcel 在多处理器核心并行处理资源，因此资源类型可以执行的转换仅限于一次对单个文件进行操作的。对于跨多个文件进行转换，可以使用自定义的<a href="packagers.html">Packager</a>。</p>
+<h2 id="资源类型接口"><a class="header-link" href="#资源类型接口"></a>资源类型接口</h2>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> {Asset} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'parcel-bundler'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyAsset</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Asset</span> </span>{
+  type = <span class="hljs-string">'foo'</span>; <span class="hljs-comment">// set the main output type.</span>
+
+  parse(code) {
+    <span class="hljs-comment">// 解析代码，生成 AST 语法树</span>
+    <span class="hljs-keyword">return</span> ast;
+  }
+
+  pretransform() {
+    <span class="hljs-comment">// 可选，在收集依赖之前执行。</span>
+  }
+
+  collectDependencies() {
+    <span class="hljs-comment">// 分析依赖</span>
+    <span class="hljs-keyword">this</span>.addDependency(<span class="hljs-string">'my-dep'</span>);
+  }
+
+  transform() {
+    <span class="hljs-comment">// 可选，在收集依赖之后执行。</span>
+  }
+
+  generate() {
+    <span class="hljs-comment">// 代码生成，你可以返回多个转换（renditions）。</span>
+    <span class="hljs-comment">// 这个结果会传给合适的 packager,用来生成最终的代码包</span>
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">foo</span>: <span class="hljs-string">'my stuff here'</span>, <span class="hljs-comment">// main output</span>
+      js: <span class="hljs-string">'some javascript'</span> <span class="hljs-comment">// alternative rendition to be placed in JS bundle if needed</span>
+    };
+  }
+}</code></pre><h2 id="注册资源类型"><a class="header-link" href="#注册资源类型"></a>注册资源类型</h2>
+<p>你可以通过 bundler 的 <code>addAssetType</code> 方法来注册你的资源类型。该方法参数为文件扩展名和资源类型模块的文件路径，这里直接使用文件路径而不是实际的对象，以便传递给 worker 进程。</p>
+<pre class="hljs"><code><span class="hljs-keyword">const</span> Bundler = <span class="hljs-built_in">require</span>(<span class="hljs-string">'parcel-bundler'</span>);
+
+<span class="hljs-keyword">let</span> bundler = <span class="hljs-keyword">new</span> Bundler(<span class="hljs-string">'input.js'</span>);
+bundler.addAssetType(<span class="hljs-string">'.ext'</span>, <span class="hljs-built_in">require</span>.resolve(<span class="hljs-string">'./MyAsset'</span>));</code></pre>    </main>
+  </div>
+  <script>
+    (function () {
+      var activeLink = Array.from(document.querySelectorAll('nav a')).find(function (a) {
+        return a.href === window.location.href;
+      });
+
+      activeLink.classList.add('selected');
+    })();
+  </script>
+</body>
+</html>
